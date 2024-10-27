@@ -1,5 +1,23 @@
 {% extends "layout.html.j2" %}
 {% block title %} Home {% endblock %}
 {% block content %}
-<p> This is the Home page </p>
+
+  <div class="row mb-4">
+    <div class="col-md-8 mx-auto">
+    <h3>Hate writing cover letters? Well you're in the right place.</h3>
+    <p>Copy a job discription into the box below and our AI career advisor will bash one out in no time:</p>
+    </div>
+  </div>
+  <div class="row mb-4">
+    <form id="cover-letter-input">
+      <label for="jobSpec">Job Spec:</label>
+      <input type="text" id="jobSpec" required><br><br>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+ 
+
 {% endblock %}
