@@ -1,7 +1,9 @@
 import requests
 
+API_TOKEN = ""
+
 api_url = "https://api-inference.huggingface.co/models/t5-small"
-headers = {"Authorization": f"Bearer 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"}
+headers = {"Authorization": f"Bearer {API_TOKEN}"}
 
 data = {"inputs": "Say hello"}
 
