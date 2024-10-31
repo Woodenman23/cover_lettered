@@ -1,7 +1,5 @@
-from flask import Blueprint, render_template, request, session, redirect, url_for, flash
-from wikipedia.exceptions import DisambiguationError
-
-from website import IMAGES_PATH
+from flask import Blueprint, render_template, request
+from ai_api import generate_letter
 
 views = Blueprint("views", __name__)
 
@@ -26,3 +24,28 @@ def home():
 @views.route("/about")
 def about():
     return render_template("about.html.j2", sections=sections)
+
+
+@views.route("/ask", methods=["POST", "GET"])
+def ask():
+    if request.method == "POST":
+        job_spec = request.form["jobSpec"]
+        resume = request.form["resume"]
+        result = generate_letter(job_spec, resume)
+        if result == None:
+            return no_result()
+        return render_template(
+            "cover_letter.html.j2",
+            result=result,
+            sections=sections,
+        )
+        # TODO: handle API connection error
+    return render_template("ask.html.j2", sections=sections)
+
+
+def no_result() -> str:
+    return render_template(
+        "cover_letter.html.j2",
+        result="I cannot summarize this, try something else.",
+        sections=sections,
+    )
