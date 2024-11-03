@@ -7,11 +7,13 @@ views = Blueprint("views", __name__)
 class Section:
     def __init__(self, name: str) -> None:
         self.name = name
-        self.title = name.capitalize()
+        self.title = " ".join(
+            word.capitalize() for word in name.replace("_", " ").split()
+        )
         self.route = "/" + name
 
 
-section_names = ["about"]
+section_names = ["about", "letter_builder"]
 
 sections = {name: Section(name) for name in section_names}
 
@@ -26,7 +28,7 @@ def about():
     return render_template("about.html.j2", sections=sections)
 
 
-@views.route("/ask", methods=["POST", "GET"])
+@views.route("/letter_builder", methods=["POST", "GET"])
 def ask():
     if request.method == "POST":
         job_spec = request.form["jobSpec"]
@@ -40,7 +42,7 @@ def ask():
             sections=sections,
         )
         # TODO: handle API connection error
-    return render_template("ask.html.j2", sections=sections)
+    return render_template("/letter_builder.html.j2", sections=sections)
 
 
 def no_result() -> str:
