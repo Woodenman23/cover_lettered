@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, session, flash, redirect, url_for
 
 from ai_api import generate_letter
+from website.models import Users
+from website import db
 
 views = Blueprint("views", __name__)
 
@@ -57,24 +59,45 @@ def login():
         user = request.form["username"]
         session["user"] = user
         flash("Login Successful!")
+        found_user = Users.query.filter_by(username=user).first()
+        if found_user:
+            session["email"] = found_user.email
+        else:
+            usr = Users(username=user, email="")
+            db.session.add(usr)
+            db.session.commit()
+
         return redirect(url_for("views.profile"))
     else:
         if "user" in session:
             flash("Already Logged In!")
             return redirect(url_for("views.profile"))
-
         return render_template("login.html.j2")
 
 
-@views.route("/profile")
+@views.route("/profile", methods=["POST", "GET"])
 def profile():
+    email = None
     if "user" in session:
-        return render_template("profile.html.j2", username=session["user"])
+        if request.method == "POST":
+            email = request.form["email"]
+            found_user = Users.query.filter_by(username=session["user"]).first()
+            found_user.email = email
+            db.session.commit()
+            flash("Email saved!")
+        elif "email" in session:
+            email = session["email"]
+
+        return render_template("profile.html.j2", username=session["user"], email=email)
+    else:
+        flash("You are not logged in!")
+    return redirect(url_for("views.login"))
 
 
 @views.route("/logout")
 def logout():
     session.pop("user", None)
+    session.pop("email", None)
     return redirect(url_for("views.home"))
 
 
