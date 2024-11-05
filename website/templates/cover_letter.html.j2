@@ -4,8 +4,18 @@
 
 {% block content %}
 
-<p>"{{result}}"</p>
+<div class="row mb-4">
+  <div class="col-md-8 mx-auto">
+    <h3>"Here is your cover letter:" </h3>
+    <p>"{{result}}"</p>
+  </div>
+</div>
 
-<p>"Ask me about <a href="/ask" >something else</a>".</p>
+<div class="row mb-4">
+  <div class="col">
+    <p>"Ask me for help with <a href="/ask" >another application</a>".</p>
+  </div>
+</div>
+
 
 {% endblock %}

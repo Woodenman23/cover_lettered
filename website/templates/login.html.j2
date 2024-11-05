@@ -1,0 +1,25 @@
+{% extends "layout.html.j2" %}
+{% block title %} Login {% endblock %}
+{% block content %}
+
+  <div class="row mb-4">
+    <div class="col-md-8 mx-auto text-center">
+      <h3>Login Here</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <form action="#" method="POST" class="text-center" id="login_form">
+        <div class="form-group">
+          <input id="username_input" name="username" placeholder="Username" required><br><br>
+        </div>
+        <div class="form-group">
+          <input id="password_input" name="password" placeholder="Password" required><br><br>
+          <button type="submit">Submit</button>
+        <div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

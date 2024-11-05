@@ -66,13 +66,19 @@
               <a class="nav-item nav-link mr-auto" id="{{ section.name }}" href="/{{ section.name }}">{{ section.title }}</a>
             {% endfor %} 
 
-            {% if not session["logged_in"] %}
+            {% if not session["user"] %}
             <a class="nav-item nav-link" id="login" href="/login"
               >Login</a
+            >
+            <a class="nav-item nav-link" id="signup" href="/signup"
+              >Sign Up</a
             >
             {% else %}
             <a class="nav-item nav-link" id="logout" href="/logout"
               >Logout</a
+            >
+            <a class="nav-item nav-link" id="profile" href="/profile"
+              >Profile</a
             >
             {% endif %}
           </div>
