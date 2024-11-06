@@ -16,7 +16,10 @@ class Section:
         self.route = "/" + name
 
 
-section_names = ["about", "letter_builder"]
+with open("cover_letter.txt", "r") as file:
+    latest_letter = file.read()
+
+section_names = ["about"]
 
 sections = {name: Section(name) for name in section_names}
 
@@ -36,12 +39,15 @@ def about():
     return render_template("about.html.j2")
 
 
-@views.route("/letter_builder", methods=["POST", "GET"])
-def ask():
+@views.route("/builder", methods=["POST", "GET"])
+def builder():
+    global latest_letter
     if request.method == "POST":
         job_spec = request.form["jobSpec"]
-        resume = request.form["resume"]
-        result = generate_letter(job_spec, resume)
+        with open("resume.txt", "r") as file:
+            resume = file.read()
+        result = generate_letter(resume, job_spec)
+        latest_letter = result
         if result == None:
             return no_result()
         return render_template(
@@ -104,7 +110,10 @@ def sign_up():
 def profile():
     if "user" in session:
         return render_template(
-            "profile.html.j2", username=session["user"], email=session["email"]
+            "profile.html.j2",
+            username=session["user"],
+            email=session["email"],
+            latest_letter=latest_letter,
         )
     else:
         flash("Please log in to view your profile!")

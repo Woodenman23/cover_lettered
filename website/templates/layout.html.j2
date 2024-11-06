@@ -41,7 +41,7 @@
     />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
-    <title>{% block title %}Layout{% endblock %}</title>
+    <title>{% block title %}Cover Lettered{% endblock %}</title>
   </head>
 
   <body>
@@ -74,11 +74,12 @@
               >Sign Up</a
             >
             {% else %}
-            <a class="nav-item nav-link" id="logout" href="/logout"
-              >Logout</a
-            >
+            <a class="nav-item nav-link" id="builder" href="/builder"
+              >Letter Builder</a>
             <a class="nav-item nav-link" id="profile" href="/profile"
               >Profile</a
+            ><a class="nav-item nav-link" id="logout" href="/logout"
+              >Logout</a
             >
             {% endif %}
           </div>

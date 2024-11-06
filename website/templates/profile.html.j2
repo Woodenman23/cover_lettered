@@ -11,11 +11,18 @@
 <div class="row mb-4">
   <div class="col-md-8 mx-auto text-center">
     <h4>Latest Cover Letter: </h4>
-    <p> Cover Letter String </p>
+    <p> {{ latest_letter }} </p>
   </div>
   <div class="col-md-4 mx-auto text-center">
   <p>Name: {{ username }}</p>
   <p>Email: {{ email }}</p>
+    <a href="/upload_resume" class="btn btn-primary btn-lg">Upload Resume</a>
+  </div>
+</div>
+
+<div class="row justify-content-center align-items-center mb-4">
+  <div class="col-md-10 col-lg-8 text-center">
+    <a href="/letter_builder" class="btn btn-primary btn-lg">Build a Cover Letter</a>
   </div>
 </div>
 

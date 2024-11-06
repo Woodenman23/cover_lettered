@@ -22,7 +22,7 @@ def generate_letter(resume_text: str, job_role: str) -> str:
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=messages,
-        temperature=0.5,
+        temperature=0.7,
         max_tokens=1000,
     )
 
