@@ -56,18 +56,20 @@ def ask():
 def login():
     if request.method == "POST":
         session.permanent = True
-        user = request.form["username"]
-        session["user"] = user
-        flash("Login Successful!")
-        found_user = Users.query.filter_by(username=user).first()
+        email = request.form["email"]
+        session["email"] = email
+        found_user = Users.query.filter_by(email=email).first()
         if found_user:
-            session["email"] = found_user.email
-        else:
-            usr = Users(username=user, email="")
-            db.session.add(usr)
-            db.session.commit()
-
-        return redirect(url_for("views.profile"))
+            print(found_user.password)
+            if str(found_user.password) == request.form["password"]:
+                session["user"] = found_user.name
+                flash("Login Successful!")
+                return redirect(url_for("views.profile"))
+            else:
+                flash("Password incorrect, please try again.")
+                return render_template("login.html.j2")
+        flash(f"No user profile found for {email}, sign up!")
+        return redirect(url_for("views.sign_up"))
     else:
         if "user" in session:
             flash("Already Logged In!")
@@ -75,22 +77,37 @@ def login():
         return render_template("login.html.j2")
 
 
+@views.route("/signup", methods=["POST", "GET"])
+def sign_up():
+    email = None
+    if request.method == "POST":
+        session.permanent = True
+        name = request.form["name"]
+        email = request.form["email"]
+        password = request.form["password"]
+        found_user = Users.query.filter_by(email=email).first()
+        if found_user:
+            flash("Account already exists, please login.")
+            return redirect(url_for("views.login"))
+        usr = Users(name=name, email=email, password=password)
+        session["email"] = usr.email
+        session["user"] = usr.name
+
+        db.session.add(usr)
+        db.session.commit()
+        flash(f"Welcome {name}!")
+        return redirect(url_for("views.profile"))
+    return render_template("sign-up.html.j2")
+
+
 @views.route("/profile", methods=["POST", "GET"])
 def profile():
-    email = None
     if "user" in session:
-        if request.method == "POST":
-            email = request.form["email"]
-            found_user = Users.query.filter_by(username=session["user"]).first()
-            found_user.email = email
-            db.session.commit()
-            flash("Email saved!")
-        elif "email" in session:
-            email = session["email"]
-
-        return render_template("profile.html.j2", username=session["user"], email=email)
+        return render_template(
+            "profile.html.j2", username=session["user"], email=session["email"]
+        )
     else:
-        flash("You are not logged in!")
+        flash("Please log in to view your profile!")
     return redirect(url_for("views.login"))
 
 
@@ -99,11 +116,6 @@ def logout():
     session.pop("user", None)
     session.pop("email", None)
     return redirect(url_for("views.home"))
-
-
-@views.route("/signup")
-def sign_up():
-    return render_template("sign-up.html.j2")
 
 
 def no_result() -> str:

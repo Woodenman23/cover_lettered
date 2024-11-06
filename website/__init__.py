@@ -24,6 +24,7 @@ def create_app() -> Flask:
     app.register_blueprint(views, url_prefix="/")
 
     with app.app_context():
+        # db.drop_all()  # FOR DEV ENVIRONMENT ONLY
         db.create_all()
 
     return app
