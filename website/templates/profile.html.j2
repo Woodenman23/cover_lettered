@@ -8,12 +8,12 @@
     
   </div>
 </div>
-<div class="row mb-4">
-  <div class="col-md-8 mx-auto text-center">
+<div class="row mb-4" style="white-space: pre-wrap">
+  <div class="col-md-8 mx-auto">
     <h4>Latest Cover Letter: </h4>
     <p> {{ latest_letter }} </p>
   </div>
-  <div class="col-md-4 mx-auto text-center">
+  <div class="col-md-4">
   <p>Name: {{ username }}</p>
   <p>Email: {{ email }}</p>
     <a href="/upload_resume" class="btn btn-primary btn-lg">Upload Resume</a>
@@ -22,9 +22,9 @@
 
 <div class="row justify-content-center align-items-center mb-4">
   <div class="col-md-10 col-lg-8 text-center">
-    <a href="/letter_builder" class="btn btn-primary btn-lg">Build a Cover Letter</a>
+    <a href="/builder" class="btn btn-primary btn-lg">Build a Cover Letter</a>
   </div>
 </div>
 
-
+  
 {% endblock %}

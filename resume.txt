@@ -1,13 +1,18 @@
-Rozzi Roomian
+Skills:
+Python, CI/CD (GitLab, Jenkins), AWS, Docker, Kubernetes, Terraform, Ansible, Git, Linux/Unix, Bash Scripting, Network & Server Management, Monitoring & Auditing Tools, Agile (Jira and Confluence), Java, Javascript, SQL (PostgreSQL), Technical Documentation, Boundless curiosity.
 
-great woman
+Education:
+MPhys Theoretical Physics, 2:1 (GPA Equivalent: 3.5)
+University of Liverpool, Department of Mathematical Sciences
+Graduated: 2015
 
-artist
-
-thinker
-
-provocateur
-
-grew up in the circus
-
-champion tickler
+Work History:
+IT Support Technician | Blu Wireless Technology
+September 2022 – June 2024
+    • Developed Python automation tools that reduced manual deployment tasks by 40%, increasing team productivity.
+    • Spearheaded a company-wide server migration, coordinating with stakeholders to ensure a smooth transition while minimizing downtime and disruptions to operations.
+    • Provided day-to-day IT support, managing both hardware and software issues, including server administration, network troubleshooting, and software installations.
+    • Built an Ansible configuration system, automating server provisioning and updates, cutting setup times by 50%.
+    • Collaborated with engineering teams to streamline DevOps workflows, enhancing system reliability and reducing deployment errors.
+    • Conducted regular system performance checks and applied updates to ensure optimal performance and security across infrastructure.
+    • Collaborated with cross-functional teams to identify and implement innovative solutions, resulting in a 25% reduction in incident response times and improved overall system reliability.

@@ -5,5 +5,5 @@ rich
 pathlib
 requests
 PyYAML
-transformers
-torch
+openai
+python-docx
