@@ -1,0 +1,10 @@
+{% extends "layout.html.j2" %}
+{% block title %} Resume {% endblock %}
+{% block content %}
+<div class="row mb-4">
+  <div class="col-md-8 mx-auto" style="white-space: pre-wrap">
+    {{ markdown_content }}
+    <p>"Ask me for help with <a href="/ask" >another application</a>".</p>
+  </div>
+</div>
+{% endblock %}

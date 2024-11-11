@@ -60,14 +60,15 @@ def sign_up():
                 email=email,
                 password=generate_password_hash(password),
             )
+            db.session.add(usr)
+            db.session.commit()
+
             session["email"] = usr.email
             session["user"] = usr.name
             session["user_id"] = usr.id
-
-            db.session.add(usr)
-            db.session.commit()
             flash(f"Welcome {name}!")
             return redirect(url_for("views.profile"))
+
     return render_template("sign-up.html.j2")
 
 

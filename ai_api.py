@@ -4,14 +4,6 @@ from website import OPEN_AI_API_TOKEN
 
 client = OpenAI(api_key=OPEN_AI_API_TOKEN)
 
-# def generate_letter() -> CoverLetters:
-
-# cover_letter = CoverLetters(
-#     user_id=session["user_id"],
-#     job_title=,
-
-# )
-
 
 def generate_letter_text(
     resume_text: str, job_title: str, company: str, job_role: str

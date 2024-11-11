@@ -35,9 +35,13 @@ def create_app() -> Flask:
 
     from website.views import views
     from website.auth import auth
+    from website.info import info
+    from website.read_doc import uploads
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
+    app.register_blueprint(info, url_prefix="/")
+    app.register_blueprint(uploads, url_prefix="/")
 
     with app.app_context():
         # db.drop_all()  # FOR DEV ENVIRONMENT ONLY
