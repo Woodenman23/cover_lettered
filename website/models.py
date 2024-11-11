@@ -1,15 +1,16 @@
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from datetime import datetime
+from flask_login import UserMixin
 
-from website import db
+from website import db, login_manager
 
 
-class Users(db.Model):
+class Users(UserMixin, db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column()
     email: Mapped[str] = mapped_column(unique=True)
     password: Mapped[str] = mapped_column()
-    resume = relationship("Resume", back_populates="user")
+    resume: Mapped[str] = mapped_column(nullable="True")
 
     cover_letters = relationship(
         "CoverLetters", back_populates="user", cascade="all, delete-orphan"
@@ -27,9 +28,6 @@ class CoverLetters(db.Model):
     user = relationship("Users", back_populates="cover_letters", uselist=False)
 
 
-class Resume(db.Model):
-    id: Mapped[int] = mapped_column(primary_key=True)
-    user_id: Mapped[int] = mapped_column(db.ForeignKey("users.id"), nullable="False")
-    filename: Mapped[str] = mapped_column()
-    content: Mapped[str] = mapped_column()
-    user = relationship("Users", back_populates="resume")
+@login_manager.user_loader
+def load_user(id):
+    return db.session.get(Users, int(id))

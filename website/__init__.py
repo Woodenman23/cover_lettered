@@ -2,6 +2,7 @@ from flask import Flask
 from pathlib import Path
 from datetime import timedelta
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 
 class Section:
@@ -18,6 +19,7 @@ IMAGES_PATH = PROJECT_ROOT / "website/static/images"
 OPEN_AI_API_TOKEN = (Path.home() / ".ssh/openai").read_text().strip()
 
 db = SQLAlchemy()
+login_manager = LoginManager()
 
 section_names = ["about"]
 SECTIONS = {name: Section(name) for name in section_names}
@@ -32,11 +34,13 @@ def create_app() -> Flask:
     app.context_processor(add_sections)
 
     db.init_app(app)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login"
 
     from website.views import views
     from website.auth import auth
     from website.info import info
-    from website.read_doc import uploads
+    from website.uploads import uploads
 
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")

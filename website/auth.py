@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, session, flash, redirect, url_for
+from flask_login import current_user, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from website.models import Users
@@ -18,6 +19,7 @@ def login():
             if check_password_hash(found_user.password, request.form["password"]):
                 session["user"] = found_user.name
                 session["user_id"] = found_user.id
+                login_user(found_user)
                 flash("Login Successful!")
                 return redirect(url_for("views.profile"))
             else:
@@ -66,6 +68,7 @@ def sign_up():
             session["email"] = usr.email
             session["user"] = usr.name
             session["user_id"] = usr.id
+            login_user(usr)
             flash(f"Welcome {name}!")
             return redirect(url_for("views.profile"))
 

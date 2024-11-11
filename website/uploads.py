@@ -1,9 +1,9 @@
 from flask import request, render_template, Blueprint, session
 import pypandoc
 from pathlib import Path
+from flask_login import current_user
 
 from website import PROJECT_ROOT, db
-from website.models import Resume
 
 upload_folder = PROJECT_ROOT / "website/uploads"
 
@@ -25,14 +25,15 @@ def upload() -> None:
             file.save(str(file_path))
 
             md_content = convert_docx_to_md(file_path)
-            save_to_database(file.filename.rstrip(".docx"), md_content)
+            save_to_database(md_content)
             return render_template("resume.html.j2", markdown_content=md_content)
 
     return render_template("upload_resume.html.j2")
 
 
 @uploads.route("/resume")
-def resume(markdown_content: str) -> None:
+def resume() -> None:
+    markdown_content = session["user"].resume
     return render_template("resume.html.j2", markdown_content=markdown_content)
 
 
@@ -40,7 +41,6 @@ def convert_docx_to_md(path: Path) -> str:
     return pypandoc.convert_file(str(path), "md")
 
 
-def save_to_database(filename: str, content: str) -> None:
-    resume = Resume(filename=filename, content=content, user_id=session["user_id"])
-    db.session.add(resume)
+def save_to_database(resume_md: str) -> None:
+    current_user.resume = resume_md
     db.session.commit()
