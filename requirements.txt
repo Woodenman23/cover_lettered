@@ -6,4 +6,6 @@ pathlib
 requests
 PyYAML
 openai
-python-docx
+flask-migrate
+flask-login
+pypandoc

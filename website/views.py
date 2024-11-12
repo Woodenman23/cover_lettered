@@ -9,6 +9,7 @@ from flask import (
     jsonify,
 )
 from sqlalchemy import desc
+from flask_login import logout_user
 
 from website import db
 from website.models import CoverLetters
@@ -57,7 +58,7 @@ def builder():
         )
         db.session.add(cover_letter)
         db.session.commit()
-        if letter_text == None:
+        if letter_text is None:
             return no_result()
         return render_template(
             "cover_letter.html.j2",
@@ -70,7 +71,6 @@ def builder():
 @views.route("/profile", methods=["POST", "GET"])
 def profile():
     if "user" in session:
-
         latest_letter = (
             CoverLetters.query.filter_by(user_id=session["user_id"])
             .order_by(desc(CoverLetters.created_at))
@@ -99,6 +99,7 @@ def logout():
     session.pop("user", None)
     session.pop("email", None)
     session.pop("user_id", None)
+    logout_user()
     return redirect(url_for("views.home"))
 
 

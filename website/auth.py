@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, flash, redirect, url_for
-from flask_login import current_user, login_user
+from flask_login import login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from website.models import Users
@@ -86,6 +86,6 @@ def valid_password(password: str) -> bool:
         if letter.isdigit():
             has_int = True
 
-    if has_int == has_cap == has_lower == True:
+    if has_int and has_cap and has_lower:
         return True
     return False
