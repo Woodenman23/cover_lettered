@@ -31,14 +31,8 @@ def upload() -> None:
     return render_template("upload_resume.html.j2")
 
 
-@uploads.route("/resume")
-def resume() -> None:
-    markdown_content = session["user"].resume
-    return render_template("resume.html.j2", markdown_content=markdown_content)
-
-
 def convert_docx_to_md(path: Path) -> str:
-    return pypandoc.convert_file(str(path), "md")
+    pypandoc.convert_file(str(path), "md")
 
 
 def save_to_database(resume_md: str) -> None:

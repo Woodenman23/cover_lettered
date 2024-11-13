@@ -12,7 +12,7 @@ auth = Blueprint("auth", __name__)
 def login():
     if request.method == "POST":
         session.permanent = True
-        email = request.form["email"]
+        email = request.form["email"].lower()
         session["email"] = email
         found_user = Users.query.filter_by(email=email).first()
         if found_user:
@@ -39,8 +39,8 @@ def sign_up():
     email = None
     if request.method == "POST":
         session.permanent = True
-        name = request.form["name"]
-        email = request.form["email"]
+        name = request.form["name"].capitalize()
+        email = request.form["email"].lower()
         password = request.form["password"]
         password2 = request.form["password2"]
         found_user = Users.query.filter_by(email=email).first()

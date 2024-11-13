@@ -11,7 +11,7 @@ def generate_letter_text(
     messages = [
         {
             "role": "system",
-            "content": "You are a helpful assistant skilled at writing cover letters for job applications. You not include any addresses or dates.",
+            "content": "You are a helpful assistant, skilled at writing cover letters for job applications.",
         },
         {"role": "user", "content": f"Here is a resume:\n{resume_text}"},
         {"role": "user", "content": f"Here is a job description:\n{job_role}"},
@@ -19,21 +19,25 @@ def generate_letter_text(
         {"role": "user", "content": f"The company is called:\n{company}"},
         {
             "role": "user",
+            "content": "You should write the cover letter in the following format only:\nDear [company] hiring team,\n\n[Letter content without any header or contact information]\n\n[well-wishing sign-off],\n[Applicant name]",
+        },
+        {
+            "role": "user",
+            "content": "Do not include any contact information, headers, addresses, or irrelevant details. Focus only on writing a concise, targeted cover letter based on the provided resume and job description.",
+        },
+        {
+            "role": "user",
             "content": f"Write a cover letter for the {job_role} for the person with {resume_text}.",
         },
     ]
 
     completion = client.chat.completions.create(
-        model="gpt-4o-mini",
+        model="gpt-4",
         messages=messages,
         temperature=0.7,
         max_tokens=1000,
     )
 
     cover_letter_text = completion.choices[0].message.content
-
-    with open("cover_letter.txt", "w") as file:
-        file.write("Generated Cover Letter:\n\n")
-        file.write(cover_letter_text)
 
     return cover_letter_text

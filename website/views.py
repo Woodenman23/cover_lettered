@@ -9,7 +9,7 @@ from flask import (
     jsonify,
 )
 from sqlalchemy import desc
-from flask_login import logout_user
+from flask_login import logout_user, current_user
 
 from website import db
 from website.models import CoverLetters
@@ -37,12 +37,14 @@ def session_data():
 @views.route("/builder", methods=["POST", "GET"])
 def builder():
     if request.method == "POST":
-        job_title = request.form["jobTitle"]
+        job_title = request.form["jobTitle"].capitalize()
         job_spec = request.form["jobSpec"]
-        company = request.form["company"]
+        company = request.form["company"].capitalize()
+        resume = current_user.resume
 
-        with open("resume.txt", "r") as file:
-            resume = file.read()
+        if not resume:
+            letter_text = "Please upload a resume to produce a cover letter."
+
         letter_text = generate_letter_text(
             resume,
             job_title,
@@ -58,8 +60,7 @@ def builder():
         )
         db.session.add(cover_letter)
         db.session.commit()
-        if letter_text is None:
-            return no_result()
+
         return render_template(
             "cover_letter.html.j2",
             result=letter_text,
@@ -94,6 +95,15 @@ def profile():
     return redirect(url_for("auth.login"))
 
 
+@views.route("/resume")
+def resume():
+    if current_user.resume is not None:
+        resume_content = current_user.resume
+        return render_template("resume.html.j2", resume_content=resume_content)
+    flash("No resume found for user, please upload one!")
+    return redirect(url_for("uploads.upload"))
+
+
 @views.route("/logout")
 def logout():
     session.pop("user", None)
@@ -101,10 +111,3 @@ def logout():
     session.pop("user_id", None)
     logout_user()
     return redirect(url_for("views.home"))
-
-
-def no_result() -> str:
-    return render_template(
-        "cover_letter.html.j2",
-        result="I cannot summarize this, try something else.",
-    )
