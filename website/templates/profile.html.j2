@@ -4,27 +4,32 @@
 
 <div class="row mb-4">
   <div class="col-md-8 mx-auto text-center">
-    <h3> {{ username.capitalize() }}'s Page </h3>
+    <h2> {{ username.capitalize() }}'s Page </h2>
     
   </div>
 </div>
+
 <div class="row mb-4" style="white-space: pre-wrap">
   <div class="col-md-8 mx-auto">
-    <h4>Latest Cover Letter: </h4>
+    <h3>Latest Cover Letter: </h3>
     <p> {{ latest_letter }} </p>
+    <div class="row justify-content-center align-items-center mb-4">
+      <div class="col-md-10 col-lg-8 text-center">
+        <a href="/builder" class="btn btn-primary btn-lg">Build a Cover Letter</a>
+      </div>
+    </div>
   </div>
   <div class="col-md-4">
-  <p>Name: {{ username }}</p>
-  <p>Email: {{ email }}</p>
+  {% if resume %}
+  {{ resume }}
+  {% else %}
+  <p> No resume uploaded. </p>
+  {% endif %}
     <a href="/upload" class="btn btn-primary btn-lg">Upload Resume</a>
   </div>
 </div>
 
-<div class="row justify-content-center align-items-center mb-4">
-  <div class="col-md-10 col-lg-8 text-center">
-    <a href="/builder" class="btn btn-primary btn-lg">Build a Cover Letter</a>
-  </div>
-</div>
+
 
   
 {% endblock %}

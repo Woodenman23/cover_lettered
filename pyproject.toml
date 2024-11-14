@@ -23,6 +23,7 @@ pypandoc = "^1.14"
 flask-login = "^0.6.3"
 flask-migrate = "^4.0.7"
 ruff = "^0.7.3"
+mammoth = "^1.8.0"
 
 [build-system]
 requires = ["poetry-core"]

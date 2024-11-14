@@ -1,11 +1,16 @@
 {% extends "layout.html.j2" %}
-{% block title %} About {% endblock %}
+{% block title %} CoverLettered {% endblock %}
 {% block content %}
 <div class="row justify-content-center align-items-center" style="height: 70vh;">
   <div class="col-md-10 col-lg-8 text-center">
-    <h3 class="mb-4">Meet your new letter writing scribe</h3>
-    <a href="/signup" class="btn btn-primary btn-lg">Sign Up</a>
+    <h2 class="mb-4">Meet your new letter writing scribe</h2>
+    {% if current_user %}
+    <a href="/signup" class="btn btn-primary btn-lg">Create Cover Letter</a>
+    {% else %}
+    <a href="/demo" class="btn btn-primary mb-2 btn-lg">Demo</a>
+    <a href="/signup" class="btn btn-primary mb-2 btn-lg">Sign Up</a>
     <p><a href="/login" >Log in</a></p>
+    {% endif %}
   </div>
 </div>
 

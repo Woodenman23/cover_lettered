@@ -1,18 +1,21 @@
 {% extends "layout.html.j2" %}
-{% block title %} Build {% endblock %}
+{% block title %} Demo {% endblock %}
 {% block content %}
 
-<div class="container">
   <div class="row mb-4">
-    <div class="col-md-8 mx-auto">
-      <h3>Hate writing cover letters? Well you're in the right place.</h3>
-      <p>Copy a job description and your resume into the form below and our AI career advisor will bash one out in no time:</p>
+    <div class="col-md-8 mx-auto text-center">
+      <h3>Copy a job description into the form below and upload your resume, our AI will do the rest!</h3>
     </div>
   </div>
   
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <form action="#" method="POST" class="text-center" id="cover-letter-input">
+    <form action="#" method="POST" enctype="multipart/form-data" class="text-center" id="cover-letter-input">
+      <div class="form-group mb-3">
+        <label for="resume"> Resume: </label>
+        <input id="resume" type="file" name="file" accept=".docx" required>
+      </div>
+      
         <input id="job_title" name="jobTitle" placeholder="Job Title" required><br><br>
         <input id="company" name="company" placeholder="Company" required><br><br>
         <div class="form-group">
@@ -21,11 +24,11 @@
         </div>
         <div class="form-group">
           <button type="submit">Submit</button>
-        <div>
+        </div>
       </form>
     </div>
   </div>
-</div>
-</div>
+
+
 
 {% endblock %}

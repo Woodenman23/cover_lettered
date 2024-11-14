@@ -21,7 +21,10 @@ views = Blueprint("views", __name__)
 
 @views.route("/")
 def home():
-    return render_template("home.html.j2", logo="default_logo")
+    if current_user.is_authenticated:
+        return render_template("home.html.j2", current_user=True)
+    else:
+        return render_template("home.html.j2", current_user=False)
 
 
 @views.route("/about")
@@ -52,7 +55,7 @@ def builder():
             job_spec,
         )
         cover_letter = CoverLetters(
-            user_id=session["user_id"],
+            user_id=current_user.id,
             job_title=job_title,
             company=company,
             cover_letter=letter_text,
@@ -71,23 +74,23 @@ def builder():
 
 @views.route("/profile", methods=["POST", "GET"])
 def profile():
-    if "user" in session:
+    if current_user is not None:
         latest_letter = (
             CoverLetters.query.filter_by(user_id=session["user_id"])
             .order_by(desc(CoverLetters.created_at))
             .first()
         )
-
-        # Check if a cover letter was found before accessing its content
         if latest_letter:
             latest_letter_content = latest_letter.cover_letter
         else:
             latest_letter_content = "No cover letter found."
 
+        resume_content = current_user.resume
+
         return render_template(
             "profile.html.j2",
-            username=session["user"],
-            email=session["email"],
+            username=current_user.name,
+            resume=resume_content,
             latest_letter=latest_letter_content,
         )
     else:

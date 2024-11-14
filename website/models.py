@@ -24,7 +24,7 @@ class CoverLetters(db.Model):
     company: Mapped[str] = mapped_column()
     cover_letter: Mapped[str] = mapped_column()
     job_spec: Mapped[str] = mapped_column()
-    created_at: Mapped[datetime] = mapped_column(default=datetime.now())
+    created_at: Mapped[datetime] = mapped_column(default=datetime.now)
     user = relationship("Users", back_populates="cover_letters", uselist=False)
 
 
