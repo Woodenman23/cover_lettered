@@ -16,7 +16,19 @@ class Section:
 
 PROJECT_ROOT = Path(__file__).parent.parent
 IMAGES_PATH = PROJECT_ROOT / "website/static/images"
-OPEN_AI_API_TOKEN = (Path.home() / ".ssh/openai").read_text().strip()
+
+
+def get_secret(secret_name):
+    secret_path = f"/run/secrets/{secret_name}"
+    try:
+        with open(secret_path, "r") as secret_file:
+            return secret_file.read().strip()
+    except FileNotFoundError:
+        print(f"Secret {secret_name} not found!")
+        return None
+
+
+OPEN_AI_API_TOKEN = get_secret("open_ai_token")
 
 db = SQLAlchemy()
 login_manager = LoginManager()

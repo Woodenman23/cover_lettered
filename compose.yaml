@@ -1,0 +1,10 @@
+version: '1.0'
+services:
+  my_app:
+    image: coverlettered
+    secrets:
+      - open_ai_token
+
+secrets:
+  open_ai_token:
+    file: /home/joe/.ssh/openai

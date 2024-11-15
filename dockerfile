@@ -12,9 +12,6 @@ COPY requirements.txt .
 
 # Install any dependencies
 RUN pip install -r requirements.txt
-RUN apt-get update && \
-    apt-get install -y pandoc && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy the content of the local src directory to the working directory
 COPY . ./
