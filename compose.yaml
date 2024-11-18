@@ -1,10 +1,12 @@
-version: '1.0'
+version: "3.9"
 services:
   my_app:
-    image: coverlettered
+    image: cover_lettered
     secrets:
       - open_ai_token
+    ports:
+      - "5001:5001"
 
 secrets:
   open_ai_token:
-    file: /home/joe/.ssh/openai
+    file: /home/ubuntu/.tokens/openai
